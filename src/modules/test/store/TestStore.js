@@ -1,5 +1,5 @@
 import { observable, action, computed } from "mobx";
-// import service from "../service";
+import service from "../service";
 
 class TestStore {
   @observable mobxDataTest = 'mobxDataTest';
@@ -11,10 +11,10 @@ class TestStore {
   @action async actionTest() {
     console.log('action-test');
 
-    // const result = await service.queryTest();
-    // if (result) {
-    //   console.log('success');
-    // }
+    const result = await service.queryTest();
+    if (result) {
+      console.log('success');
+    }
   }
 };
 

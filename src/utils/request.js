@@ -2,9 +2,28 @@ import axios from 'axios';
 
 import { message } from 'antd';
 
-const API_ROOT =
-  process.env.NODE_ENV === 'development' ? '/dev/developer' : '/developer';
-const MOCK_ROOT = '/mock';
+// const API_ROOT =
+//   process.env.NODE_ENV === 'development' ? '/dev/developer' : '/developer';
+
+let API_ROOT;
+
+switch (process.env.NODE_ENV) {
+  case 'development':
+  case 'release':
+    API_ROOT = 'https://qa-api-hotelpc.kuaibaobao.com';
+    break;
+  case 'preview':
+    API_ROOT = 'https://pre-api-hotelpc.kuaibaobao.co';
+    break;
+  case 'production':
+    API_ROOT = 'https://api-hotelpc.kuaibaobao.com';
+    break;
+
+  default:
+    break;
+}
+
+const MOCK_ROOT = 'https://yapi.kuaibaobao.com/mock/57';
 
 const requestConfigAdapter = config => {
   let API_BASE = API_ROOT;
@@ -52,90 +71,3 @@ axios.interceptors.response.use(handleResponse);
 });
 
 export default request;
-
-
-
-// import axios from 'axios';
-
-// export function request(params) {
-//   return axiosRequest(params);
-// }
-
-// function axiosRequest(params) {
-//   if (params.method.toLocaleLowerCase() === 'post') {
-//     let newParams = new URLSearchParams();
-//     if (params.data instanceof Object) {
-//       for (let key in params.data) {
-//         newParams.append(key, params.data[key]);
-//       }
-//       params.data = newParams;
-//     }
-//   } else if (params.method.toLocaleLowerCase() === 'file') {
-//     params.method = 'post';
-
-//     let newParams = new FormData();
-//     if (params.data instanceof Object) {
-//       for (let key in params.data) {
-//         newParams.append(key, params.data[key]);
-//       }
-//       params.data = newParams;
-//     }
-//   }
-
-//   let axiosConfig = {
-//     method: params.method.toLocaleLowerCase(),
-//     url: params.url,
-//     data: params.data
-//   };
-
-//   if (params.config instanceof Object) {
-//     for (let key in params.config) {
-//       axiosConfig[key] = params.config[key];
-//     }
-//   }
-
-//   return axios(axiosConfig).then(res => res.data);
-// }
-
-
-// import axios from 'axios';
-
-// export function request(url, method = 'get', data = {}, config = {}) {
-//   return axiosRequest(url, method, data, config);
-// }
-
-// function axiosRequest(url, method, data, config) {
-//   if (method.toLocaleLowerCase() === 'post') {
-//     let params = new URLSearchParams();
-//     if (data instanceof Object) {
-//       for (let key in data) {
-//         params.append(key, data[key]);
-//       }
-//       data = params;
-//     }
-//   } else if (method.toLocaleLowerCase() === 'file') {
-//     method = 'post';
-
-//     let params = new FormData();
-//     if (data instanceof Object) {
-//       for (let key in data) {
-//         params.append(key, data[key]);
-//       }
-//       data = params;
-//     }
-//   }
-
-//   let axiosConfig = {
-//     method: method.toLocaleLowerCase(),
-//     url: url,
-//     data: data
-//   };
-
-//   if (config instanceof Object) {
-//     for (let key in config) {
-//       axiosConfig[key] = config[key];
-//     }
-//   }
-
-//   return axios(axiosConfig).then(res => res.data);
-// }

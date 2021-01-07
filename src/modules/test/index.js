@@ -22,9 +22,11 @@ class Test extends React.Component {
 
   componentDidMount() {
     const { TestStore } = this.props;
-    const { mobxDataTest } = TestStore;
+    const { mobxDataTest, actionTest } = TestStore;
 
     iosKeyMsg();
+
+    actionTest();
 
     console.log('mobxDataTest:::', mobxDataTest);
     console.log('时间格式化:::', dateFormat(new Date('2020.07.04 18:18:16'), 'yyyy-MM-dd hh:mm:ss'));
@@ -39,6 +41,8 @@ class Test extends React.Component {
   }
 
   testModal(props) {
+    console.log('props:::', props);
+
     const { prefixCls } = this.props;
 
     const testClassNames = classnames({
